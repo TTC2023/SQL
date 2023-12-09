@@ -24,3 +24,12 @@ SELECT sell_date, COUNT(distinct product) as num_sold, GROUP_CONCAT(distinct pro
 FROM 
 Activities
 GROUP BY sell_date
+
+Select stock_name, Sum(
+    Case
+    when operation = 'Buy' then -price
+    when operation = 'Sell' then price
+    End
+) as capital_gain_loss
+From Stocks
+Group By stock_name
