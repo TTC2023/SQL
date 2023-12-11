@@ -33,3 +33,7 @@ Select stock_name, Sum(
 ) as capital_gain_loss
 From Stocks
 Group By stock_name
+
+SELECT product.product_name, sales.year, sales.price FROM Sales
+Inner Join Product on product.product_id = sales.product_id
+Order BY sales.year DESC
