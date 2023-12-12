@@ -37,3 +37,8 @@ Group By stock_name
 SELECT product.product_name, sales.year, sales.price FROM Sales
 Inner Join Product on product.product_id = sales.product_id
 Order BY sales.year DESC
+
+Select user_id, max(time_stamp) as last_stamp
+From Logins
+Where time_stamp between '2020-01-01 00:00:00' and '2020-12-31 23:59:59'
+Group By user_id
