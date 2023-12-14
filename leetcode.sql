@@ -42,3 +42,10 @@ Select user_id, max(time_stamp) as last_stamp
 From Logins
 Where time_stamp between '2020-01-01 00:00:00' and '2020-12-31 23:59:59'
 Group By user_id
+
+SELECT s.machine_id, ROUND(AVG(e.timestamp - s.timestamp),3) as processing_time
+FROM Activity s
+INNER JOIN activity e ON s.machine_id = e.machine_id
+AND s.process_id = e.process_id 
+WHERE s.activity_type = 'start' AND e.activity_type = 'end'
+GROUP BY s.machine_id
