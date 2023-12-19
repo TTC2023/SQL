@@ -49,3 +49,8 @@ INNER JOIN activity e ON s.machine_id = e.machine_id
 AND s.process_id = e.process_id 
 WHERE s.activity_type = 'start' AND e.activity_type = 'end'
 GROUP BY s.machine_id
+
+SELECT date_id, make_name, count(distinct lead_id) as unique_leads, count(distinct partner_id) as unique_partners 
+From DailySales
+GROUP BY date_id, make_name
+ORDER BY date_id ASC, make_name;
