@@ -54,3 +54,9 @@ SELECT date_id, make_name, count(distinct lead_id) as unique_leads, count(distin
 From DailySales
 GROUP BY date_id, make_name
 ORDER BY date_id ASC, make_name;
+
+SELECT customer_number
+FROM Orders
+GROUP BY customer_number
+ORDER BY COUNT(customer_number) desc
+LIMIT 1
