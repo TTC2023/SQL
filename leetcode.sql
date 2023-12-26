@@ -60,3 +60,8 @@ FROM Orders
 GROUP BY customer_number
 ORDER BY COUNT(customer_number) desc
 LIMIT 1
+
+SELECT 
+  user_id, CONCAT(UPPER(SUBSTRING(name, 1, 1)), LOWER(SUBSTRING(name FROM 2))) AS name
+FROM 
+  Users;
