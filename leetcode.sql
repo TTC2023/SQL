@@ -86,3 +86,10 @@ SELECT actor_id, director_id
 FROM ActorDirector
 GROUP BY actor_id, director_id
 HAVING COUNT(timestamp) >=3
+
+SELECT employee_id, 
+CASE
+    WHEN employee_id % 2 <> 0 and name not like 'M%' THEN salary
+    ELSE 0
+    END as bonus
+FROM Employees
