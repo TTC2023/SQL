@@ -93,3 +93,4 @@ CASE
     ELSE 0
     END as bonus
 FROM Employees
+ORDER BY Employee_id
