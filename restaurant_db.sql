@@ -70,9 +70,38 @@ GROUP BY order_id
 ORDER BY item_count DESC;
 
 -- How many orders had more than 12 items?
-SELECT COUNT(order_id)
+SELECT COUNT(*) as total_orders
+FROM
+(SELECT order_id, COUNT(item_id) as num_of_items
 FROM restaurant_db.order_details
-WHERE COUNT(order_id)>12;
+GROUP BY order_id
+HAVING num_of_items > 12) as orders_greater_12;
+
+-- Combine the menu_items and order_details tables into a single table
+SELECT * 
+FROM restaurant_db.menu_items mi
+JOIN restaurant_db.order_details od ON mi.menu_item_id = od.item_id;
+
+-- What were the least and most ordered items? What categories were they in?
+SELECT COUNT(mi.item_name) AS item_count, mi.item_name, mi.category
+FROM restaurant_db.menu_items mi
+JOIN restaurant_db.order_details od ON mi.menu_item_id = od.item_id
+GROUP BY mi.item_name,mi.category
+ORDER BY item_count DESC;
+
+-- What were the top 5 orders that spent the most money?
+SELECT od.order_id, SUM(price) AS amount
+FROM restaurant_db.menu_items mi
+JOIN restaurant_db.order_details od ON mi.menu_item_id = od.item_id
+GROUP BY order_id
+ORDER BY amount DESC
+LIMIT 5;
+
+-- View the details of the highest spend order. Which specific items were purchased?
+SELECT od.item_id, mi.item_name, od.order_date
+FROM restaurant_db.menu_items mi
+JOIN restaurant_db.order_details od ON mi.menu_item_id = od.item_id
+WHERE order_id = 440;
 
 
 INSERT INTO order_details VALUES (1, 1, '2023-01-01', '11:38:36', 109),
