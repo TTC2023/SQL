@@ -42,8 +42,8 @@ SELECT ROUND((SUM(CASE
 			END) / COUNT(winner)*100),2) AS higher_rank_wins
 FROM chess_games_schema.chess_data;
 
--- Which user won the most amount of games? User taranga won the most amount of games with 72 wins
--- In what percentage of those games was the user the higher rated player?
+-- Which user won the most amount of games? User taranga won the most amount of games with 72 wins.
+-- In what percentage of those games was the user the higher rated player? He was the higher ranked player in 50% of those games. 
 
 SELECT player_id, COUNT(*) AS total_wins
 FROM (
@@ -54,6 +54,27 @@ FROM (
 GROUP BY player_id
 ORDER BY total_wins DESC
 LIMIT 1;
+
+SELECT player_id, 
+       COUNT(*) AS total_wins,
+       SUM(CASE 
+             WHEN (player_id = black_id AND black_rating > white_rating) OR 
+                  (player_id = white_id AND white_rating > black_rating) THEN 1
+             ELSE 0
+           END) / 72 AS higher_rank_percent
+FROM (
+    SELECT CASE WHEN winner = 'Black' THEN black_id ELSE white_id END AS player_id,
+           black_id,
+           white_id,
+           black_rating, -- Assuming this column exists
+           white_rating  -- Assuming this column exists
+    FROM chess_games_schema.chess_data
+    WHERE winner IN ('Black', 'White')
+) AS wins
+GROUP BY player_id
+ORDER BY total_wins DESC
+LIMIT 1;
+
 
         
 
