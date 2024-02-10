@@ -26,7 +26,7 @@ FROM (SELECT *
 		WHERE winner = 'White') as white_table;
         
 -- What percentage of games are won by the player with the higher rating? 61.58%
--- Does this vary by piece color?
+-- Does this vary by piece color? White has a 3 percent more chance of winning then black.
 
 SELECT ROUND((SUM(CASE 
 				WHEN white_rating > black_rating AND winner = 'White' THEN 1
@@ -35,4 +35,27 @@ SELECT ROUND((SUM(CASE
 			END) / COUNT(winner)*100),2) AS higher_rank_wins
 FROM chess_games_schema.chess_data;
 
+SELECT ROUND((SUM(CASE 
+				WHEN white_rating > black_rating AND winner = 'White' THEN 1
+				WHEN black_rating > white_rating AND winner = 'Black' THEN 1
+                ELSE 0
+			END) / COUNT(winner)*100),2) AS higher_rank_wins
+FROM chess_games_schema.chess_data;
+
+-- Which user won the most amount of games? User taranga won the most amount of games with 72 wins
+-- In what percentage of those games was the user the higher rated player?
+
+SELECT player_id, COUNT(*) AS total_wins
+FROM (
+    SELECT CASE WHEN winner = 'Black' THEN black_id ELSE white_id END AS player_id
+    FROM chess_games_schema.chess_data
+    WHERE winner IN ('Black', 'White')
+) AS wins
+GROUP BY player_id
+ORDER BY total_wins DESC
+LIMIT 1;
+
+        
+
+        
 		
