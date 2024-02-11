@@ -1,0 +1,32 @@
+-- Check for Null values 
+SELECT
+  COUNT(*) AS total_rows,
+  COUNT(symbol) AS symbol_not_null,
+  COUNT(date) AS date_not_null,
+  COUNT(open) AS open_not_null,
+  COUNT(high) AS high_not_null,
+  COUNT(low) AS low_not_null,
+  COUNT(close) AS close_not_null,
+  COUNT(volume) AS volume_not_null
+FROM
+  sp_500.stock_data sd;
+
+-- Make sure date is all in the same format 
+UPDATE sp_500.stock_data
+SET date = STR_TO_DATE(date, '%M %d %Y')
+WHERE STR_TO_DATE(date, '%M %d %Y') IS NOT NULL;
+
+-- Which date in the sample saw the largest overall trading volume? March, 11, 2015 had the highest trading volume at 24,403,174.
+-- On that date, which two stocks were traded most? INCY and APA were the most traded stocks on this day.
+SELECT date, MAX(volume) as most_volume
+FROM stock_data
+GROUP BY date
+ORDER BY most_volume
+LIMIT 1;
+
+SELECT date, symbol, volume 
+FROM stock_data
+WHERE date = '2015-03-11'
+ORDER BY volume DESC
+LIMIT 2;
+
