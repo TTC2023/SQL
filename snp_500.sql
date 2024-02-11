@@ -47,7 +47,12 @@ ORDER BY volatility DESC
 LIMIT 1;
 
 -- If you could go back in time and invest in one stock from 1/2/2014 - 12/29/2017, which would you choose? What % gain would you realize?
- 
+SELECT symbol, (MAX(High) - MIN(Low)) AS price_range
+FROM stock_data
+GROUP BY symbol
+ORDER BY price_range DESC
+LIMIT 1;
+
 
 
 
