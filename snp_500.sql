@@ -38,5 +38,16 @@ GROUP BY day_of_week
 ORDER BY total_volume DESC
 LIMIT 1;
 
+-- On which date did Amazon (AMZN) see the most volatility, measured by the difference between the high and low price? Friday, July 24, 2015 with 51.22 points.
+SELECT date, ROUND(SUM(high-low),2) AS volatility
+FROM stock_data
+WHERE symbol = 'AMZN'
+GROUP BY date
+ORDER BY volatility DESC
+LIMIT 1;
+
+-- If you could go back in time and invest in one stock from 1/2/2014 - 12/29/2017, which would you choose? What % gain would you realize?
+ 
+
 
 
