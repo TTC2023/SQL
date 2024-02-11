@@ -30,3 +30,13 @@ WHERE date = '2015-03-11'
 ORDER BY volume DESC
 LIMIT 2;
 
+-- On which day of the week does volume tend to be highest? Monday Lowest? Friday
+SELECT DAYOFWEEK(STR_TO_DATE(date, '%W, %M %d, %Y')) AS day_of_week, 
+       SUM(volume) AS total_volume
+FROM stock_data
+GROUP BY day_of_week
+ORDER BY total_volume DESC
+LIMIT 1;
+
+
+
