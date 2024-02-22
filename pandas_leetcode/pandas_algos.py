@@ -15,3 +15,7 @@ unique_partners = (
 )
 
 ans = pd.merge(unique_leads, unique_partners, on=['date_id', 'make_name'])
+
+def sales_analysis(sales: pd.DataFrame, product: pd.DataFrame) -> pd.DataFrame:
+    merged_tables = pd.merge(product, sales, how='inner', on='product_id')
+    return merged_tables [['product_name','year','price']]
