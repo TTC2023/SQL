@@ -136,6 +136,7 @@ FROM (
 WHERE Id > 0;
 
 -- I learned that when using a SELECT * statement with JOIN you have to explicitly name each column or it will throw an error. Also when checking for null do not us the = sign. The proper way to check is with IS NULL
+
 SELECT name, bonus
 FROM (
     SELECT e.name, b.bonus
@@ -143,3 +144,14 @@ FROM (
     LEFT JOIN Bonus b ON e.empId = b.empId
 ) AS bonus_table
 WHERE bonus < 1000 OR bonus IS NULL
+
+-- I learned that putting an else statement at the end of a case statement helps fill the table
+
+SELECT s.user_id, ROUND(AVG(CASE
+        WHEN c.action = 'timeout' THEN 0
+        WHEN c.action = 'confirmed' THEN 1
+        ELSE 0
+    END),2) AS confirmation_rate
+FROM Signups s
+LEFT JOIN Confirmations c ON s.user_id = c.user_id
+GROUP BY user_id
