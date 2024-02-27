@@ -134,3 +134,12 @@ FROM (
     FROM Weather
 ) AS WeatherWithId
 WHERE Id > 0;
+
+-- I learned that when using a SELECT * statement with JOIN you have to explicitly name each column or it will throw an error. Also when checking for null do not us the = sign. The proper way to check is with IS NULL
+SELECT name, bonus
+FROM (
+    SELECT e.name, b.bonus
+    FROM Employee e
+    LEFT JOIN Bonus b ON e.empId = b.empId
+) AS bonus_table
+WHERE bonus < 1000 OR bonus IS NULL
