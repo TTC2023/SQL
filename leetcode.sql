@@ -106,3 +106,11 @@ LEFT JOIN
             AND u.purchase_date >= p.start_date
             AND u.purchase_date <= p.end_date
 GROUP BY p.product_id
+
+SELECT name 
+FROM (
+    SELECT name, COUNT(managerId) AS emp
+    FROM Employee 
+    GROUP BY name
+    HAVING COUNT(managerId) >= 5
+) AS employees
