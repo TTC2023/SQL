@@ -122,3 +122,15 @@ WHERE visit_id NOT IN (SELECT v.visit_id
     JOIN Transactions t ON v.visit_id = t.visit_id
     GROUP BY v.visit_id)
 GROUP BY customer_id
+
+-- I learned that the WHERE clause acts before the SELECT clause, therefore I had to use a subquery to make sure that the Id column would be recognized in the WHERE clause. So when using a CASE statement you must use a subquery to filter because it will not be recognized.
+
+SELECT *
+FROM (
+    SELECT CASE
+            WHEN LAG(temperature, 1) OVER (ORDER BY recordDate) < temperature THEN id
+            ELSE 0
+        END AS Id
+    FROM Weather
+) AS WeatherWithId
+WHERE Id > 0;
