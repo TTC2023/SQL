@@ -155,3 +155,15 @@ SELECT s.user_id, ROUND(AVG(CASE
 FROM Signups s
 LEFT JOIN Confirmations c ON s.user_id = c.user_id
 GROUP BY user_id
+
+-- I learned to read the problem more thoroughly
+
+WITH odd_id AS (
+    SELECT * 
+    FROM Cinema
+    WHERE id%2 != 0
+)
+SELECT * 
+FROM odd_id
+WHERE description != 'boring'
+ORDER BY rating DESC
