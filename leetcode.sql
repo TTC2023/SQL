@@ -167,3 +167,21 @@ SELECT *
 FROM odd_id
 WHERE description != 'boring'
 ORDER BY rating DESC
+
+-- Always make sure you column names are correct
+
+SELECT p.project_id, ROUND(AVG(e.experience_years),2) AS average_years
+FROM Project p
+JOIN Employee e ON p.employee_id = e.employee_id
+GROUP BY project_id
+
+-- I learned that you could do a desc and asc in the order by clause
+
+SELECT r.contest_id, ROUND(COUNT(r.contest_id)/(
+    SELECT COUNT(*)
+    FROM Users
+) * 100,2) AS percentage
+FROM Users u
+JOIN Register r ON u.user_id = r.user_id
+GROUP BY contest_id
+ORDER BY percentage DESC, contest_id ASC
