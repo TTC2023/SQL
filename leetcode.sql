@@ -197,3 +197,20 @@ SELECT DATE_FORMAT(trans_date, '%Y-%m') AS month, country, COUNT(trans_date) AS 
     END) AS approved_total_amount
 FROM Transactions
 GROUP BY month, country
+
+-- Do not forget distinct when searching for unique values
+
+SELECT teacher_id, COUNT(DISTINCT subject_id) AS cnt
+FROM Teacher
+GROUP BY teacher_id
+
+-- I learned that it is sometimes useful to take away what is not needed instead of keeping what is needed.
+
+SELECT activity_date AS day, COUNT(DISTINCT user_id) AS active_users
+FROM Activity
+WHERE activity_date IN (
+    SELECT activity_date
+    FROM Activity
+    WHERE activity_type = 'scroll_down' OR activity_type = 'send_message'
+)
+GROUP BY day
