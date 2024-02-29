@@ -185,3 +185,15 @@ FROM Users u
 JOIN Register r ON u.user_id = r.user_id
 GROUP BY contest_id
 ORDER BY percentage DESC, contest_id ASC
+
+-- I learned two lesson in this challenge. First that you need to use the SUM function with Case studies when grouping columns together. Second, that you need to use the DATE_FORMAT with group by or when changing the format of a date to get the month or day.
+
+SELECT DATE_FORMAT(trans_date, '%Y-%m') AS month, country, COUNT(trans_date) AS trans_count, SUM(CASE
+    WHEN state = 'approved' THEN 1
+    ELSE 0
+    END) AS approved_count, SUM(amount) AS trans_total_amount, SUM(CASE
+    WHEN state = 'approved' THEN amount
+    ELSE 0
+    END) AS approved_total_amount
+FROM Transactions
+GROUP BY month, country
