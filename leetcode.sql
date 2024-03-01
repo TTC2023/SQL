@@ -223,3 +223,21 @@ WITH five_plus AS (
 SELECT class
 FROM five_plus
 WHERE num_class >= 5;
+
+-- Remember to read the question and do not forget to order the values if asked in the question
+
+SELECT user_id, COUNT(DISTINCT follower_id) AS followers_count
+FROM Followers
+GROUP BY user_id
+ORDER BY user_id ASC
+
+-- Do not use aggregate functions in the WHERE clause. Also, keep the column names in order
+
+WITH single_cnt AS (
+    SELECT COUNT(num) AS cnt_num, num
+    FROM MyNumbers
+    GROUP BY num
+    HAVING cnt_num = 1
+)
+SELECT MAX(num) AS num
+FROM single_cnt;
