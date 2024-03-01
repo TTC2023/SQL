@@ -214,3 +214,12 @@ WHERE activity_date IN (
     WHERE activity_type = 'scroll_down' OR activity_type = 'send_message'
 )
 GROUP BY day
+
+WITH five_plus AS (
+    SELECT COUNT(class) AS num_class, class
+    FROM Courses
+    GROUP BY class
+)
+SELECT class
+FROM five_plus
+WHERE num_class >= 5;
