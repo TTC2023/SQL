@@ -241,3 +241,10 @@ WITH single_cnt AS (
 )
 SELECT MAX(num) AS num
 FROM single_cnt;
+
+-- I learned that to match columns it is best to do a NOT IN clause and subquery the column you want to match with
+
+SELECT employee_id
+FROM Employees
+WHERE salary < 30000 AND manager_id NOT IN (SELECT employee_id FROM employees)
+ORDER BY employee_id
