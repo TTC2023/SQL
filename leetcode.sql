@@ -248,3 +248,13 @@ SELECT employee_id
 FROM Employees
 WHERE salary < 30000 AND manager_id NOT IN (SELECT employee_id FROM employees)
 ORDER BY employee_id
+
+-- I learned that directly adding + 1 in a THEN statement works. Doing id = id + 1 does not work because it is treated as a boolean statement.
+
+SELECT CASE
+    WHEN id = (SELECT MAX(id) FROM seat) AND id % 2 = 1 THEN id 
+    WHEN id % 2 = 1 THEN id + 1
+    ELSE id - 1
+    END AS id, student
+FROM Seat
+ORDER BY id ASC
