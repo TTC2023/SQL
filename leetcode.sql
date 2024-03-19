@@ -258,3 +258,26 @@ SELECT CASE
     END AS id, student
 FROM Seat
 ORDER BY id ASC
+
+-- I learned that using Union is key when you need to combined two totally different values
+
+SELECT name AS results
+FROM (
+    SELECT u.name
+    FROM MovieRating mr
+    JOIN users u ON mr.user_id = u.user_id
+    GROUP BY name
+    ORDER BY COUNT(name) DESC, name ASC
+    LIMIT 1
+) as most_name
+UNION ALL
+SELECT title AS results
+FROM (
+    SELECT m.title
+    FROM MovieRating mr
+    JOIN Movies m ON mr.movie_id = m.movie_id
+    WHERE created_at BETWEEN '2020-01-31' AND '2020-03-01'
+    GROUP BY title
+    ORDER BY AVG(rating) DESC, title ASC
+    LIMIT 1
+) AS most_movie;
