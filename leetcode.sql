@@ -296,3 +296,9 @@ FROM cte
 GROUP BY id
 ORDER BY num DESC
 LIMIT 1
+
+-- I learned that when using a JOIN make sure to explicity mention the table in the first line of code
+
+DELETE p1 FROM Person p1
+INNER JOIN Person p2
+WHERE p1.id > p2.id AND p1.email = p2.email
