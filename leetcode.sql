@@ -309,3 +309,15 @@ SELECT sell_date, COUNT(DISTINCT product) AS num_sold, GROUP_CONCAT(DISTINCT pro
 FROM Activities
 GROUP BY sell_date
 ORDER BY sell_date
+
+-- It is useful to use a cte with a WHERE subquery when comparing two different column values
+
+WITH cte AS (
+    SELECT c.customer_id, COUNT(DISTINCT p.product_key) AS all_keys
+    FROM Customer c
+    JOIN Product p ON c.product_key = p.product_key
+    GROUP BY c.customer_id
+)
+SELECT customer_id
+FROM cte
+WHERE all_keys = (SELECT COUNT(product_key) FROM Product);
