@@ -302,3 +302,10 @@ LIMIT 1
 DELETE p1 FROM Person p1
 INNER JOIN Person p2
 WHERE p1.id > p2.id AND p1.email = p2.email
+
+-- GROUP CONCAT is a great tool to use when trying to order certain values in a row.
+
+SELECT sell_date, COUNT(DISTINCT product) AS num_sold, GROUP_CONCAT(DISTINCT product ORDER BY product SEPARATOR ',') AS products
+FROM Activities
+GROUP BY sell_date
+ORDER BY sell_date
