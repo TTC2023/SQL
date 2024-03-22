@@ -321,3 +321,15 @@ WITH cte AS (
 SELECT customer_id
 FROM cte
 WHERE all_keys = (SELECT COUNT(product_key) FROM Product);
+
+-- When using lead or lag make sure to use OVER (ORDER BY column). It will draw an error if this is not used
+
+WITH cte AS (SELECT CASE
+        WHEN LEAD(num,1) OVER (ORDER BY id) = num AND LEAD(num,2) OVER (ORDER BY id) = num THEN num
+        ELSE NULL
+        END AS ConsecutiveNums
+    FROM Logs
+)
+SELECT DISTINCT ConsecutiveNums
+FROM cte
+WHERE ConsecutiveNums IS NOT NULL;
