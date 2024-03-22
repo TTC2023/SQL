@@ -333,3 +333,14 @@ WITH cte AS (SELECT CASE
 SELECT DISTINCT ConsecutiveNums
 FROM cte
 WHERE ConsecutiveNums IS NOT NULL;
+
+-- Using over is a very powerful to when trying to do a total sum for every row
+
+WITH cte AS 
+    (SELECT person_name, SUM(weight) OVER (ORDER BY turn) AS total_weight
+    FROM Queue
+    ORDER BY turn DESC)
+SELECT person_name
+FROM cte
+WHERE total_weight <= 1000
+LIMIT 1
