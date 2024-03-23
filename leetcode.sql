@@ -344,3 +344,18 @@ SELECT person_name
 FROM cte
 WHERE total_weight <= 1000
 LIMIT 1
+
+-- Always break down problems to see the steps more clearly
+
+WITH cte AS (
+    SELECT * 
+    FROM Employees 
+    WHERE salary < 30000
+)
+SELECT employee_id
+FROM cte
+WHERE manager_id NOT IN (
+    SELECT employee_id
+    FROM Employees
+)
+ORDER BY employee_id
