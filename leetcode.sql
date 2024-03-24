@@ -372,3 +372,13 @@ SELECT product_name, SUM(unit) AS unit
 FROM common_table_expression
 GROUP BY product_name
 HAVING unit >= 100
+
+SELECT product_id
+FROM Products
+WHERE low_fats = 'Y' AND recyclable = 'Y'
+
+-- Null needs to be specified
+
+SELECT name
+FROM Customer
+WHERE referee_id !=2 OR referee_id IS NULL
