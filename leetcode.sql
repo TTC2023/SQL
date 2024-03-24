@@ -359,3 +359,16 @@ WHERE manager_id NOT IN (
     FROM Employees
 )
 ORDER BY employee_id
+
+-- Watch out for duplicate values when joining tables
+
+WITH common_table_expression AS (
+    SELECT p.product_name, o.unit
+    FROM Products p
+    JOIN Orders o ON o.product_id = p.product_id
+    WHERE order_date BETWEEN '2020-02-01' AND '2020-02-29'
+)
+SELECT product_name, SUM(unit) AS unit
+FROM common_table_expression
+GROUP BY product_name
+HAVING unit >= 100
