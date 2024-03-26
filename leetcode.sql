@@ -382,3 +382,22 @@ WHERE low_fats = 'Y' AND recyclable = 'Y'
 SELECT name
 FROM Customer
 WHERE referee_id !=2 OR referee_id IS NULL
+
+-- Keep names unique to avoid an ambiguous error
+
+SELECT DISTINCT s.name
+    FROM SalesPerson s
+    LEFT JOIN Orders o ON o.sales_id = s.sales_id
+    LEFT JOIN Company c ON o.com_id = c.com_id
+    WHERE s.name NOT IN (
+        SELECT s.name
+        FROM SalesPerson s
+        LEFT JOIN Orders o ON o.sales_id = s.sales_id
+        LEFT JOIN Company c ON o.com_id = c.com_id
+        WHERE c.name = 'RED'
+    )
+
+-- rank is a keyword so make sure to put in quotations. Use DENSE_RANK when placing a consequential value to each score
+
+SELECT score, DENSE_RANK() OVER(ORDER BY score DESC) AS 'rank'
+FROM Scores
