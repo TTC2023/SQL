@@ -401,3 +401,11 @@ SELECT DISTINCT s.name
 
 SELECT score, DENSE_RANK() OVER(ORDER BY score DESC) AS 'rank'
 FROM Scores
+
+-- you can still group by a certain item even though it is not in the select statement
+
+SELECT u.name, COALESCE(SUM(r.distance),0) AS travelled_distance
+FROM Users u 
+LEFT JOIN Rides r ON u.id = r.user_id
+GROUP BY u.id
+ORDER By travelled_distance DESC, name ASC
